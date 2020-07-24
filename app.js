@@ -42,7 +42,7 @@ function create() {
 
     createImgBack.setAttribute('src', pictureChoice);
 
-// Track number of bears. When bearCount === bushNumber - 1, create a snake
+// TODO: Track number of bears. When bearCount === bushNumber - 1, create a snake
 
     function createSnake(){
         if(pictureChoice === test[0] && snakeMax > snakeCount) {
@@ -82,41 +82,40 @@ clickCounter.innerText = `Click Count: ${clickCount}`;
 
 let body = document.querySelector('body');
 
-
-    spaces.forEach(space =>{
-        space.addEventListener('click', function(){
-            body.classList.add('noClick');
-            let back = this.querySelector('.back');
-            back.classList.add('showPicture');
-            let img = back.querySelector("img");
-            if(img.classList.contains('bear')){
-                clickCount++;
-                clickCounter.innerText = `Click Count: ${clickCount}`;
-                if (clickCount == bushNumber.value-1){
-                    winGame();
-                } else {
-                back.addEventListener('animationend', function(){
-                    space.classList.add('clicked');
-                    body.classList.remove('noClick');
-                })
-            }} else {
-            endGame();
-            }
-        })
+spaces.forEach(space =>{
+    space.addEventListener('click', function(){
+        body.classList.add('noClick');
+        let back = this.querySelector('.back');
+        back.classList.add('showPicture');
+        let img = back.querySelector("img");
+        if(img.classList.contains('bear')){
+            clickCount++;
+            clickCounter.innerText = `Click Count: ${clickCount}`;
+            if (clickCount == bushNumber.value-1){
+                winGame();
+            } else {
+            back.addEventListener('animationend', function(){
+                space.classList.add('clicked');
+                body.classList.remove('noClick');
+            })
+        }} else {
+        endGame();
+        }
     })
+})
 
 //Win Game 
+
 function winGame() {
     body.classList.remove('noClick');
-
     let myModal = document.getElementById('myModalWin');
     myModal.classList.add('end');
 }
+
 //End Game
 
 function endGame() {
     body.classList.remove('noClick');
-
     let myModal = document.getElementById('myModal');
     let endClickCount = document.getElementById('endClickCount');
     myModal.classList.add('end');
