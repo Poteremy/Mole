@@ -20,6 +20,7 @@ function newGame() {
 
 let snakeMax = 1;
 let snakeCount = 0;
+let bearCount = 0;
 
 function create() {
     
@@ -41,6 +42,8 @@ function create() {
 
     createImgBack.setAttribute('src', pictureChoice);
 
+// Track number of bears. When bearCount === bushNumber - 1, create a snake
+
     function createSnake(){
         if(pictureChoice === test[0] && snakeMax > snakeCount) {
             createImgBack.setAttribute('class', "snake");
@@ -53,6 +56,7 @@ function create() {
     function createBear() {
         createImgBack.setAttribute("src", test[1]);
         createImgBack.setAttribute('class', "bear");
+        bearCount++;
     }
 
     createSnake();
@@ -78,25 +82,36 @@ clickCounter.innerText = `Click Count: ${clickCount}`;
 
 let body = document.querySelector('body');
 
-spaces.forEach(space =>{
-    space.addEventListener('click', function(){
-        body.classList.add('noClick');
-        let back = this.querySelector('.back');
-        back.classList.add('showPicture');
-        let img = back.querySelector("img");
-        if(img.classList.contains('bear')){
-            clickCount++;
-            clickCounter.innerText = `Click Count: ${clickCount}`;
-            back.addEventListener('animationend', function(){
-                space.classList.add('clicked');
-                    body.classList.remove('noClick');
-            })
-        } else {
-           endGame();
-        }
-    })
-})
 
+    spaces.forEach(space =>{
+        space.addEventListener('click', function(){
+            body.classList.add('noClick');
+            let back = this.querySelector('.back');
+            back.classList.add('showPicture');
+            let img = back.querySelector("img");
+            if(img.classList.contains('bear')){
+                clickCount++;
+                clickCounter.innerText = `Click Count: ${clickCount}`;
+                if (clickCount == bushNumber.value-1){
+                    winGame();
+                } else {
+                back.addEventListener('animationend', function(){
+                    space.classList.add('clicked');
+                    body.classList.remove('noClick');
+                })
+            }} else {
+            endGame();
+            }
+        })
+    })
+
+//Win Game 
+function winGame() {
+    body.classList.remove('noClick');
+
+    let myModal = document.getElementById('myModalWin');
+    myModal.classList.add('end');
+}
 //End Game
 
 function endGame() {
@@ -120,12 +135,14 @@ function reset (){
     snakeCount = 0;
     clickCount = 0;
     let myModal = document.getElementById('myModal');
+    let myModalWin = document.getElementById('myModalWin');
     myModal.classList.remove('end');
+    myModalWin.classList.remove('end')
     spaces.forEach(e => e.parentNode.removeChild(e));
     clickCounter.innerText = `Click Count: ${clickCount}`;
 }
 
-// Modal Control
+// Lose Modal Control
 
 let modal = document.getElementById('myModal');
 let btn = document.getElementById('playAgain');
@@ -159,4 +176,41 @@ window.onclick = function(event) {
     gameNumber.classList.remove('hidden');
     bushNumber.value = '';
     }
-}}
+}
+
+// Win Modal Control
+
+let modalWin = document.getElementById('myModalWin');
+let btnWin = document.getElementById('playAgainWin');
+let spanWin = document.getElementsByClassName('closeWin')[0];
+
+btnWin.onclick = function () {
+    reset();
+    const clickCount = document.getElementById('clickCount');
+    gameBoard.classList.add('hidden');
+    clickCount.classList.add('hidden');
+    gameNumber.classList.remove('hidden');
+    bushNumber.value = '';
+  }
+  
+  spanWin.onclick = function () {
+      reset();
+      const clickCount = document.getElementById('clickCount');
+      gameBoard.classList.add('hidden');
+      clickCount.classList.add('hidden');
+      gameNumber.classList.remove('hidden');
+      bushNumber.value = '';
+  }
+  
+  window.onclick = function(event) {
+    if (event.target == modalWin) {
+      reset();
+      const clickCount = document.getElementById('clickCount');
+      gameBoard.classList.add('hidden');
+      clickCount.classList.add('hidden');
+      gameNumber.classList.remove('hidden');
+      bushNumber.value = '';
+      }
+  }
+
+}

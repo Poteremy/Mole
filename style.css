@@ -93,6 +93,7 @@ h1 {
     height: 100px;
     position: absolute;
     z-index: 1;
+    opacity: .5;
 }
 
 .snake {
@@ -146,6 +147,16 @@ h1 {
     background-color: black;
 }
 
+.modalWin {
+    position: fixed;
+    opacity: 0;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: #d9ff97;
+}
+
 .modal-content {
     background-color: #b22222;
     text-align: center;
@@ -156,7 +167,24 @@ h1 {
     border-radius: 10px;
 }
 
+.modal-content-win {
+    background-color: #c5ff6c;
+    text-align: center;
+    margin: 10% auto;
+    padding: 20px;
+    border: 2px solid #78ca20;
+    width: 50%;
+    border-radius: 10px;
+}
+
 .modal-content h2 {
+    font-weight: 900;
+    font-size: 50px;
+    margin-bottom: 20px;
+    color: black;
+}
+
+.modal-content-win h2 {
     font-weight: 900;
     font-size: 50px;
     margin-bottom: 20px;
@@ -169,13 +197,30 @@ h1 {
     margin-bottom: 10px;
 }
 
+.modal-content-win p{
+    font-size: 20px;
+    color: black;
+    margin-bottom: 10px;
+}
+
 .close {
     color: black;
     float: right;
     font-size: 28px;
 }
 
+.closeWin {
+    color: black;
+    float: right;
+    font-size: 28px;
+}
+
 .close:hover{
+    color: black;
+    cursor: pointer;
+}
+
+.closeWin:hover{
     color: black;
     cursor: pointer;
 }
@@ -189,7 +234,21 @@ h1 {
     margin-top: 10px;
 }
 
+#playAgainWin {
+    border: 2px #66a522 solid;
+    padding: 5px 10px;
+    background-color: #78ca20;
+    border-radius: 5px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
 #playAgain:hover {
+    cursor: pointer;
+    transform: translateY(-0.5px)
+}
+
+#playAgainWin:hover {
     cursor: pointer;
     transform: translateY(-0.5px)
 }
